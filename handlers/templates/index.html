@@ -36,11 +36,54 @@
             left: 0;
             color: #3498db;
         }
+        .command-box {
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 20px 0;
+            position: relative;
+        }
+        .copy-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .copy-btn:hover {
+            background-color: #2980b9;
+        }
+        .source-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #3498db;
+            text-decoration: none;
+        }
+        .source-link:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
     <h1>1fps.video - Encrypted Screen Sharing</h1>
     
+    <h2>Quick Start</h2>
+    <div class="command-box">
+        <code>go run github.com/1fpsvideo/1fps@v0.1.0</code>
+        <button id="copyBtn" class="copy-btn" onclick="copyToClipboard()">Copy</button>
+    </div>
+    <p>
+        <a href="https://github.com/1fpsvideo/1fps" target="_blank" class="source-link">
+            🔒 Check out our secure, open-source client app
+        </a>
+    </p>
+
     <h2>Hassle-free video sharing for:</h2>
     <ul class="feature-list">
         <li>Developers</li>
@@ -75,5 +118,21 @@
     <p><strong>Note:</strong> We're currently working on encrypting cursor coordinates for even greater privacy.</p>
 
     <p>Start sharing your screen effortlessly and securely with 1fps.video today!</p>
+
+    <script>
+        function copyToClipboard() {
+            const el = document.createElement('textarea');
+            el.value = 'go run github.com/1fpsvideo/1fps@v0.1.0';
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            const copyBtn = document.getElementById('copyBtn');
+            copyBtn.textContent = 'Copied';
+            setTimeout(() => {
+                copyBtn.textContent = 'Copy';
+            }, 2000);
+        }
+    </script>
 </body>
 </html>
