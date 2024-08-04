@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screen Share</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        #cursor {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            pointer-events: none;
+            transition: left 0.1s linear, top 0.1s linear;
+        }
+    </style>
+</head>
+
+<body>
+    <img id="screenshot" alt="Screenshot">
+    <svg id="cursor" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 28 28" enable-background="new 0 0 28 28"
+        xml:space="preserve">
+        <polygon fill="#FFFFFF" points="8.2,20.9 8.2,4.9 19.8,16.5 13,16.5 12.6,16.6 " />
+        <polygon fill="#FFFFFF" points="17.3,21.6 13.7,23.1 9,12 12.7,10.5 " />
+        <rect x="12.5" y="13.6" transform="matrix(0.9221 -0.3871 0.3871 0.9221 -5.7605 6.5909)" width="2" height="8" />
+        <polygon points="9.2,7.3 9.2,18.5 12.2,15.6 12.6,15.5 17.4,15.5 " />
+    </svg>
+
+    <script>
+        const img = document.getElementById('screenshot');
+        const cursorElement = document.getElementById('cursor');
+        let socket = null;
+
+        function getDecryptionKey() {
+            return window.location.hash.substring(1);
+        }
+
+        function getSessionID() {
+            const pathParts = window.location.pathname.split('/');
+            return pathParts[pathParts.length - 1];
+        }
+
+        async function decryptImage(encryptedData, key) {
+            const keyMaterial = await window.crypto.subtle.importKey(
+                "raw",
+                new TextEncoder().encode(key),
+                { name: "PBKDF2" },
+                false,
+                ["deriveBits", "deriveKey"]
+            );
+
+            const salt = encryptedData.slice(0, 16);
+            const iv = encryptedData.slice(16, 28);
+            const data = encryptedData.slice(28);
+
+            const derivedKey = await window.crypto.subtle.deriveKey(
+                {
+                    name: "PBKDF2",
+                    salt: salt,
+                    iterations: 100000,
+                    hash: "SHA-256"
+                },
+                keyMaterial,
+                { name: "AES-GCM", length: 256 },
+                false,
+                ["decrypt"]
+            );
+
+            const decrypted = await window.crypto.subtle.decrypt(
+                {
+                    name: "AES-GCM",
+                    iv: iv
+                },
+                derivedKey,
+                data
+            );
+
+            return new Blob([decrypted], { type: "image/webp" });
+        }
+
+        async function refreshImage() {
+            const key = getDecryptionKey();
+            if (!key) {
+                alert("Decryption key is required. Please provide it in the URL after the # symbol.");
+                return;
+            }
+
+            const sessionID = getSessionID();
+
+            try {
+                const response = await fetch(`/x/${sessionID}/screenshot?` + new Date().getTime());
+                const encryptedData = await response.arrayBuffer();
+                const decryptedBlob = await decryptImage(encryptedData, key);
+                const imageUrl = URL.createObjectURL(decryptedBlob);
+                img.src = imageUrl;
+            } catch (error) {
+                console.error("Error decrypting image:", error);
+                alert("Failed to decrypt the image. The decryption key might be invalid.");
+            }
+        }
+
+        setInterval(refreshImage, 1000); // Refresh every 1 second
+
+        function setupWebSocket() {
+            const sessionID = getSessionID();
+            socket = new WebSocket(`ws://${window.location.host}/x/${sessionID}/ws`);
+
+            socket.onopen = function (event) {
+                console.log('WebSocket connection established');
+            };
+
+            socket.onclose = function (event) {
+                console.log('WebSocket connection closed. Retrying in 5 seconds...');
+                setTimeout(setupWebSocket, 5000);
+            };
+
+            socket.onmessage = function (event) {
+                const data = JSON.parse(event.data);
+                const x = data.x;
+                const y = data.y;
+
+                const img = document.getElementById('screenshot');
+                const imgRect = img.getBoundingClientRect();
+                const imgWidth = imgRect.width;
+                const imgHeight = imgRect.height;
+
+                const scaledX = x * imgWidth / 1280;
+                const scaledY = y * imgHeight / 720;
+
+                cursorElement.style.left = imgRect.left + scaledX + 'px';
+                cursorElement.style.top = imgRect.top + scaledY + 'px';
+            };
+        }
+
+        setupWebSocket();
+        refreshImage(); // Initial image load
+    </script>
+</body>
+
+</html>

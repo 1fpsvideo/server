@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  redis:
+    image: redis:latest
+    command: redis-server --protected-mode no
+    ports:
+      - "127.0.0.1:8899:6379"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:
+
+
+
