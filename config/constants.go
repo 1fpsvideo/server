@@ -6,7 +6,7 @@ import (
 
 const (
 	UPLOAD_DIR           = "uploads"
-	SCREENSHOT_FILE      = "screenshot.webp"
+	SCREENSHOT_FILE      = "screenshot.jpeg"
 	SCREENSHOT_HASH_FILE = "screenshot_hash.txt"
 )
 
