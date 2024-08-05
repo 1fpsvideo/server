@@ -5,7 +5,7 @@ services:
     image: redis:latest
     command: redis-server --protected-mode no
     ports:
-      - "127.0.0.1:8899:6379"
+      - "127.0.0.1:8877:6379"
     volumes:
       - redis_data:/data
 
