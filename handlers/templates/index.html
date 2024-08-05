@@ -75,7 +75,7 @@
     
     <h2>Quick Start</h2>
     <div class="command-box">
-        <code>go run github.com/1fpsvideo/1fps@v0.1.1</code>
+        <code id="commandText">go run github.com/1fpsvideo/1fps@v0.1.1</code>
         <button id="copyBtn" class="copy-btn" onclick="copyToClipboard()">Copy</button>
     </div>
     <p>
@@ -122,7 +122,7 @@
     <script>
         function copyToClipboard() {
             const el = document.createElement('textarea');
-            el.value = 'go run github.com/1fpsvideo/1fps@v0.1.0';
+            el.value = document.getElementById('commandText').textContent;
             document.body.appendChild(el);
             el.select();
             document.execCommand('copy');
