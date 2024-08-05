@@ -39,6 +39,6 @@ func main() {
 	apiSessions := sessions.NewApiSessions()
 	router.HandleFunc("/v1/api/sessions", apiSessions.CreateSession).Methods("POST")
 
-	debug.PrintDebug("Server is running on http://localhost:4567")
-	http.ListenAndServe(":4567", router)
+	debug.PrintDebug("Server is running on http://localhost:8899")
+	http.ListenAndServe(":8899", router)
 }
