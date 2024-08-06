@@ -119,7 +119,9 @@
 
         function setupWebSocket() {
             const sessionID = getSessionID();
-            socket = new WebSocket(`ws://${window.location.host}/x/${sessionID}/ws`);
+            const host = window.location.host;
+            const protocol = host === '127.0.0.1' || host === 'localhost' ? 'ws://' : 'wss://';
+            socket = new WebSocket(`${protocol}${host}/x/${sessionID}/ws`);
 
             socket.onopen = function (event) {
                 console.log('WebSocket connection established');
