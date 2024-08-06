@@ -68,6 +68,12 @@
         .source-link:hover {
             text-decoration: underline;
         }
+        .footer {
+            font-size: 10px;
+            text-align: center;
+            margin-top: 20px;
+            color: #777;
+        }
     </style>
 </head>
 <body>
@@ -138,6 +144,16 @@
                 copyBtn.textContent = 'Copy';
             }, 2000);
         }
+    </script>
+    <footer class="footer">
+        For contacts, you can reach out to: <span id="email"></span>
+    </footer>
+    <script>
+        const encryptedEmail = "ebzna.chfuxva@tznvy.pbz";
+        const decryptedEmail = encryptedEmail.replace(/[a-zA-Z]/g, function(c) {
+            return String.fromCharCode((c <= "Z" ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26);
+        });
+        document.getElementById('email').textContent = decryptedEmail;
     </script>
 </body>
 </html>
