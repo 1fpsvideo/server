@@ -120,7 +120,8 @@
         function setupWebSocket() {
             const sessionID = getSessionID();
             const host = window.location.host;
-            const protocol = host === '127.0.0.1' || host === 'localhost' ? 'ws://' : 'wss://';
+            const isLocalhost = host === 'localhost' || host.startsWith('localhost:') || host.startsWith('127.0.0.1');
+            const protocol = isLocalhost ? 'ws://' : 'wss://';
             socket = new WebSocket(`${protocol}${host}/x/${sessionID}/ws`);
 
             socket.onopen = function (event) {
