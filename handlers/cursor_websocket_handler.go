@@ -61,8 +61,10 @@ func CursorWebSocketHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		var data struct {
-			X int `json:"x"`
-			Y int `json:"y"`
+			X  int  `json:"x"`
+			Y  int  `json:"y"`
+			RW *int `json:"rw"` // must be nil if not specified
+			RH *int `json:"rh"` // because of fallbacks in client code
 		}
 		err = json.Unmarshal(message, &data)
 		if err != nil {

@@ -35,7 +35,7 @@
     <img id="screenshot" alt="Screenshot">
     <svg id="cursor" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 28 28" enable-background="new 0 0 28 28"
-        xml:space="preserve">
+        xml:space="preserve" style="transform: translate(-10px, -4px);">
         <polygon fill="#FFFFFF" points="8.2,20.9 8.2,4.9 19.8,16.5 13,16.5 12.6,16.6 " />
         <polygon fill="#FFFFFF" points="17.3,21.6 13.7,23.1 9,12 12.7,10.5 " />
         <rect x="12.5" y="13.6" transform="matrix(0.9221 -0.3871 0.3871 0.9221 -5.7605 6.5909)" width="2" height="8" />
@@ -134,20 +134,46 @@
             };
 
             socket.onmessage = function (event) {
+                // Parse the incoming WebSocket message
                 const data = JSON.parse(event.data);
                 const x = data.x;
                 const y = data.y;
 
+                // Get the resized width and height from the data
+                // If not provided, fallback to default values for backwards compatibility
+                const rw = data.rw || 1280;
+                const rh = data.rh || 720;
+
+                // Get the screenshot image element and its dimensions
                 const img = document.getElementById('screenshot');
                 const imgRect = img.getBoundingClientRect();
                 const imgWidth = imgRect.width;
                 const imgHeight = imgRect.height;
 
-                const scaledX = x * imgWidth / 1280;
-                const scaledY = y * imgHeight / 720;
+                // Calculate the scaling factors
+                const scaleX = imgWidth / rw;
+                const scaleY = imgHeight / rh;
 
-                cursorElement.style.left = imgRect.left + scaledX + 'px';
-                cursorElement.style.top = imgRect.top + scaledY + 'px';
+                // Scale the cursor coordinates to match the displayed image size
+                const scaledX = x * scaleX;
+                const scaledY = y * scaleY;
+
+                // Position the cursor element
+                const cursorLeft = imgRect.left + scaledX;
+                const cursorTop = imgRect.top + scaledY;
+                cursorElement.style.left = cursorLeft + 'px';
+                cursorElement.style.top = cursorTop + 'px';
+
+                // Output verbose debugging information
+                // console.log('WebSocket data received:', data);
+                // console.log('Image dimensions:', { width: imgWidth, height: imgHeight });
+                // console.log('Resized dimensions:', { rw, rh });
+                // console.log('Scaling factors:', { scaleX, scaleY });
+                // console.log('Cursor coordinates:', { x, y });
+                // console.log('Scaled cursor coordinates:', { scaledX, scaledY });
+                // console.log('Cursor position:', { left: cursorLeft, top: cursorTop });
+                // console.log('Image rectangle:', imgRect);
+                // console.log('===')
             };
         }
 
