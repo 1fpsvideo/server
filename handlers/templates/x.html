@@ -28,10 +28,24 @@
             pointer-events: none;
             transition: left 0.1s linear, top 0.1s linear;
         }
+
+        #error-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #812e2e;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            z-index: 1000;
+            display: none;
+        }
     </style>
 </head>
 
 <body>
+    <div id="error-message"></div>
     <img id="screenshot" alt="Screenshot">
     <svg id="cursor" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 28 28" enable-background="new 0 0 28 28"
@@ -45,6 +59,7 @@
     <script>
         const img = document.getElementById('screenshot');
         const cursorElement = document.getElementById('cursor');
+        const errorMessageElement = document.getElementById('error-message');
         let socket = null;
 
         function getDecryptionKey() {
@@ -54,6 +69,15 @@
         function getSessionID() {
             const pathParts = window.location.pathname.split('/');
             return pathParts[pathParts.length - 1];
+        }
+
+        function showError(message) {
+            errorMessageElement.textContent = message;
+            errorMessageElement.style.display = 'block';
+        }
+
+        function hideError() {
+            errorMessageElement.style.display = 'none';
         }
 
         async function decryptImage(encryptedData, key) {
@@ -109,9 +133,10 @@
                 const decryptedBlob = await decryptImage(encryptedData, key);
                 const imageUrl = URL.createObjectURL(decryptedBlob);
                 img.src = imageUrl;
+                hideError();
             } catch (error) {
                 console.error("Error decrypting image:", error);
-                alert("Failed to decrypt the image. The decryption key might be invalid.");
+                showError("Failed to decrypt the image. The decryption key might be invalid.");
             }
         }
 
