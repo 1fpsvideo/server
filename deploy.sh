@@ -29,9 +29,9 @@
 REMOTE_HOST="51.81.245.182"
 REMOTE_DIR="/home/ubuntu/work/1fps"
 
-# Build the server locally for Linux
-echo "Building server locally for Linux..."
-GOOS=linux GOARCH=amd64 go build -o server.linux server.go
+# Build the server locally for Linux (static binary to avoid GLIBC issues)
+echo "Building server locally for Linux (static binary)..."
+CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -ldflags '-extldflags "-static"' -o server.linux server.go
 if [ $? -ne 0 ]; then
     echo "Build failed. Aborting deployment."
     exit 1
