@@ -4,153 +4,191 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>1fps.video - Hassle-free Screen Sharing</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        h1, h2 {
-            color: #2c3e50;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1F2526 0%, #2D3436 100%);
+            color: #1F2526;
+            min-height: 100vh;
         }
         .highlight {
-            background-color: #f1c40f;
+            background-color: #F28C38;
+            color: #F28C38;
             padding: 2px 5px;
             border-radius: 3px;
         }
-        .feature-list {
-            list-style-type: none;
-            padding: 0;
+        .feature-card {
+            background: #2D3436;
+            transition: transform 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        .cta-button {
+            background-color: #F28C38;
+            color: #1F2526;
+            font-weight: bold;
+        }
+        .cta-button:hover {
+            background-color: #1F2526;
         }
         .feature-list li {
-            margin-bottom: 10px;
-            padding-left: 20px;
             position: relative;
+            padding-left: 2rem;
+            margin-bottom: 0.75rem;
         }
         .feature-list li::before {
-            content: "•";
+            content: "\f058"; /* Font Awesome check-circle */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
             position: absolute;
             left: 0;
-            color: #3498db;
-        }
-        .command-box {
-            background-color: #f0f0f0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 10px;
-            margin: 20px 0;
-            position: relative;
-        }
-        .copy-btn {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-        .copy-btn:hover {
-            background-color: #2980b9;
-        }
-        .source-link {
-            display: inline-block;
-            margin-top: 10px;
-            color: #3498db;
-            text-decoration: none;
-        }
-        .source-link:hover {
-            text-decoration: underline;
-        }
-        .footer {
-            font-size: 10px;
-            text-align: center;
-            margin-top: 20px;
-            color: #777;
+            color: #F28C38;
         }
     </style>
 </head>
-<body>
-    <h1>1fps.video - Encrypted Screen Sharing</h1>
-    
-    <h2>Quick Start</h2>
-    <p>Screen sharing that just works: 1 binary, start sharing right away:</p>
-    <div style="text-align: center; margin: 30px 0;">
-        <a href="https://github.com/1fpsvideo/1fps/releases" target="_blank" style="display: inline-block; background-color: #3498db; color: white; padding: 15px 30px; border-radius: 5px; text-decoration: none; font-size: 18px; font-weight: bold;">Download</a>
+<body class="text-gray-100">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Header -->
+        <header class="text-center mb-16">
+            <h1 class="text-4xl sm:text-5xl font-bold mb-4">1fps.video - Encrypted Screen Sharing</h1>
+            <div class="mt-6">
+                <a href="https://github.com/1fpsvideo/1fps/releases" target="_blank" class="inline-block cta-button px-6 py-3 rounded-lg text-lg transition">Download</a>
+            </div>
+            <p class="mt-4">
+                <a href="https://github.com/1fpsvideo/1fps" target="_blank" class="text-[#F28C38] hover:underline">
+                    <i class="fas fa-code mr-2"></i>Source Code
+                </a>
+            </p>
+        </header>
+
+        <!-- Quick Start -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-semibold mb-6">Quick Start</h2>
+            <p class="text-gray-300 mb-6">Screen sharing that just works: 1 binary, start sharing right away:</p>
+            <div class="feature-card p-6 rounded-lg shadow-md">
+                <ol class="list-decimal list-inside text-gray-300">
+                    <li class="mb-2">Download the lightweight 1fps.video app from our website.</li>
+                    <li class="mb-2">Run the app—no configuration needed.</li>
+                    <li class="mb-2">Copy the unique, secure link generated.</li>
+                    <li>Share the link with anyone to view your screen instantly in their browser.</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Use Cases -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-semibold mb-6">Hassle-free video sharing for:</h2>
+            <ul class="feature-list text-gray-300">
+                <li>Developers</li>
+                <li>IT teams</li>
+                <li>Security professionals</li>
+                <li>Meeting-free collaboration enthusiasts and more</li>
+            </ul>
+        </section>
+
+        <!-- Why 1 FPS -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-semibold mb-6">Why 1 FPS?</h2>
+            <p class="text-gray-300 mb-6">We've discovered that low FPS video sharing is often sufficient for most collaborative tasks, especially for developers who spend most of their time writing code. Our approach offers several benefits:</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="feature-card p-6 rounded-lg shadow-md">
+                    <p class="text-gray-300"><i class="fas fa-check-circle text-[#F28C38] mr-2"></i>Promotes a by eliminating the need for audio</p>
+                </div>
+                <div class="feature-card p-6 rounded-lg shadow-md">
+                    <p class="text-gray-300"><i class="fas fa-bolt text-[#F28C38] mr-2"></i>Significantly reduces CPU, memory, and network consumption</p>
+                </div>
+                <div class="feature-card p-6 rounded-lg shadow-md">
+                    <p class="text-gray-300"><i class="fas fa-laptop text-[#F28C38] mr-2"></i>Allows older laptops to perform better during screen sharing</p>
+                </div>
+                <div class="feature-card p-6 rounded-lg shadow-md">
+                    <p class="text-gray-300"><i class="fas fa-leaf text-[#F28C38] mr-2"></i>More environmentally friendly due to lower resource usage</p>
+                </div>
+                <div class="feature-card p-6 rounded-lg shadow-md">
+                    <p class="text-gray-300"><i class="fas fa-desktop text-[#F28C38] mr-2"></i>Supports multiple monitors for comprehensive sharing</p>
+                </div>
+                <div class="feature-card p-6 rounded-lg shadow-md">
+                    <p class="text-gray-300"><i class="fas fa-sliders-h text-[#F28C38] mr-2"></i>Adjustable image quality to optimize traffic consumption</p>
+                </div>
+                <div class="feature-card p-6 rounded-lg shadow-md">
+                    <p class="text-gray-300"><i class="fas fa-compress text-[#F28C38] mr-2"></i>Resizable screen capture for large displays, further reducing traffic</p>
+                </div>
+                <div class="feature-card p-6 rounded-lg shadow-md">
+                    <p class="text-gray-300"><i class="fas fa-brain text-[#F28C38] mr-2"></i>Intelligent screen comparison to avoid unnecessary data transmission when the screen hasn't changed</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Is 1 FPS Enough -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-semibold mb-6">Is 1 FPS enough?</h2>
+            <p class="text-gray-300">For most coding and development work, absolutely! Plus, we use WebSocket-based cursor tracking, providing smooth, near 30 FPS pointer movement for precise demonstrations.</p>
+        </section>
+
+        <!-- Why Choose Our Service -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-semibold mb-6">Why choose our service?</h2>
+            <p class="text-gray-300">1fps.video is perfect for introverts and remote workers who prefer sharing their screen without the pressure of audio or video calls. It's a versatile solution that works alongside any team chat application you're already using. Our multi-monitor support, adjustable image quality, and screen resizing options allow you to tailor the sharing experience to your specific needs and network conditions.</p>
+        </section>
+
+        <!-- Privacy and Security -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-semibold mb-6">Privacy and Security</h2>
+            <p class="text-gray-300 mb-4">We take your privacy seriously:</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="feature-card p-6 rounded-lg shadow-md">
+                    <p class="text-gray-300"><i class="fas fa-lock text-[#F28C38] mr-2"></i>All data is end-to-end encrypted</p>
+                </div>
+                <div class="feature-card p-6 rounded-lg shadow-md">
+                    <p class="text-gray-300"><i class="fas fa-key text-[#F28C38] mr-2"></i>Encryption keys are generated client-side and never sent to our servers</p>
+                </div>
+                <div class="feature-card p-6 rounded-lg shadow-md">
+                    <p class="text-gray-300"><i class="fas fa-link text-[#F28C38] mr-2"></i>The key is part of the URL (after the # symbol), which is never transmitted to the backend</p>
+                </div>
+                <div class="feature-card p-6 rounded-lg shadow-md">
+                    <p class="text-gray-300"><i class="fas fa-user-shield text-[#F28C38] mr-2"></i>Only those with the full link can access your shared screen</p>
+                </div>
+                <div class="feature-card p-6 rounded-lg shadow-md">
+                    <p class="text-gray-300"><i class="fas fa-eye-slash text-[#F28C38] mr-2"></i>Intelligent screen comparison ensures minimal data transmission, enhancing privacy</p>
+                </div>
+            </div>
+            <p class="text-gray-300 mt-4"><strong>Note:</strong> We're currently working on encrypting cursor coordinates for even greater privacy.</p>
+        </section>
+
+        <!-- About Idea -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-semibold mb-6">About idea</h2>
+            <p class="text-gray-300">1fps.video addresses the growing need for secure, easy screen sharing and monitoring across various sectors. It's designed for long-running sessions, offering a simple link-sharing solution without software installation requirements.</p>
+            <p class="text-gray-300 mt-4">Unlike current options that often need specialized software or lack simple URL sharing, 1fps.video aims to streamline screen sharing globally. Our goal is to provide a secure, efficient solution for long-term streaming needs, making screen sharing as easy as sharing a link, while offering advanced features like multi-monitor support and traffic optimization.</p>
+            <p class="text-gray-300 mt-4">Start sharing your screen effortlessly and securely with 1fps.video today!</p>
+            <div class="mt-6 text-center">
+                <a href="https://github.com/1fpsvideo/1fps/releases" target="_blank" class="inline-block cta-button px-6 py-3 rounded-lg text-lg transition">Get Started</a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center text-gray-400 text-sm mt-12">
+            <p>&copy; 2025 1fps.video. All rights reserved.</p>
+        </footer>
     </div>
-    <p>
-        <a href="https://github.com/1fpsvideo/1fps" target="_blank" class="source-link">
-            📖 Source Code
-        </a>
-    </p>
-
-    <h2>Hassle-free video sharing for:</h2>
-    <ul class="feature-list">
-        <li>Developers</li>
-        <li>IT teams</li>
-        <li>Security professionals</li>
-        <li>Meeting-free collaboration enthusiasts and more</li>
-    </ul>
-
-    <h2>Why 1 FPS?</h2>
-    <p>We've discovered that low FPS video sharing is often sufficient for most collaborative tasks, especially for developers who spend most of their time writing code. Our approach offers several benefits:</p>
-    <ul>
-        <li>Promotes a <span class="highlight">meeting-free culture</span> by eliminating the need for audio</li>
-        <li>Significantly reduces CPU, memory, and network consumption</li>
-        <li>Allows older laptops to perform better during screen sharing</li>
-        <li>More environmentally friendly due to lower resource usage</li>
-        <li>Supports multiple monitors for comprehensive sharing</li>
-        <li>Adjustable image quality to optimize traffic consumption</li>
-        <li>Resizable screen capture for large displays, further reducing traffic</li>
-        <li>Intelligent screen comparison to avoid unnecessary data transmission when the screen hasn't changed</li>
-    </ul>
-
-    <h2>Is 1 FPS enough?</h2>
-    <p>For most coding and development work, absolutely! Plus, we use WebSocket-based cursor tracking, providing smooth, near 30 FPS pointer movement for precise demonstrations.</p>
-
-    <h2>Why choose our service?</h2>
-    <p>1fps.video is perfect for introverts and remote workers who prefer sharing their screen without the pressure of audio or video calls. It's a versatile solution that works alongside any team chat application you're already using. Our multi-monitor support, adjustable image quality, and screen resizing options allow you to tailor the sharing experience to your specific needs and network conditions.</p>
-
-    <h2>Privacy and Security</h2>
-    <p>We take your privacy seriously:</p>
-    <ul>
-        <li>All data is <span class="highlight">end-to-end encrypted</span></li>
-        <li>Encryption keys are generated client-side and never sent to our servers</li>
-        <li>The key is part of the URL (after the # symbol), which is never transmitted to the backend</li>
-        <li>Only those with the full link can access your shared screen</li>
-        <li>Intelligent screen comparison ensures minimal data transmission, enhancing privacy</li>
-    </ul>
-    <p><strong>Note:</strong> We're currently working on encrypting cursor coordinates for even greater privacy.</p>
-
-    <h2>About idea</h2>
-    <p>1fps.video addresses the growing need for secure, easy screen sharing and monitoring across various sectors. It's designed for
-    long-running sessions, offering a simple link-sharing solution without software installation requirements.</p>
-
-    <p>Unlike current options that often need specialized software or lack simple URL sharing, 1fps.video aims to streamline screen
-    sharing globally. Our goal is to provide a secure, efficient solution for long-term streaming needs, making screen
-    sharing as easy as sharing a link, while offering advanced features like multi-monitor support and traffic optimization.</p>
-
-    <p>Start sharing your screen effortlessly and securely with 1fps.video today!</p>
 
     <script>
         function copyToClipboard() {
             const el = document.createElement('textarea');
-            el.value = document.getElementById('commandText').textContent;
+            el.value = document.getElementById('commandText')?.textContent || '';
             document.body.appendChild(el);
             el.select();
             document.execCommand('copy');
             document.body.removeChild(el);
             const copyBtn = document.getElementById('copyBtn');
-            copyBtn.textContent = 'Copied';
-            setTimeout(() => {
-                copyBtn.textContent = 'Copy';
-            }, 2000);
+            if (copyBtn) {
+                copyBtn.textContent = 'Copied';
+                setTimeout(() => {
+                    copyBtn.textContent = 'Copy';
+                }, 2000);
+            }
         }
     </script>
 </body>
