@@ -1,4 +1,43 @@
-<!DOCTYPE html>
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -95,12 +134,7 @@
             <p class="text-gray-300 mb-6">We've discovered that low FPS video sharing is often sufficient for most collaborative tasks, especially for developers who spend most of their time writing code. Our approach offers several benefits:</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="feature-card p-6 rounded-lg shadow-md">
-                    <p class="text-gray-300"><i class="fas fa-check-circle text-[#F28C38] mr-2"></i>Promotes a by eliminating the need for audio</p>
-                </div>
-                <div class="feature-card p-6 rounded-lg shadow-md">
-                    <p class="text-gray-300"><i class="fas fa-bolt text-[#F28C38] mr-2"></i>Significantly reduces CPU, memory, and network consumption</p>
-                </div>
-                <div class="feature-card p-6 rounded-lg shadow-md">
+                    <p class="text-gray-300">Promotes a by eliminating the need for audio</p>
                     <p class="text-gray-300"><i class="fas fa-laptop text-[#F28C38] mr-2"></i>Allows older laptops to perform better during screen sharing</p>
                 </div>
                 <div class="feature-card p-6 rounded-lg shadow-md">
@@ -139,7 +173,7 @@
             <p class="text-gray-300 mb-4">We take your privacy seriously:</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="feature-card p-6 rounded-lg shadow-md">
-                    <p class="text-gray-300"><i class="fas fa-lock text-[#F28C38] mr-2"></i>All data is end-to-end encrypted</p>
+                    <p class="text-gray-300"><i class="fas fa-lock text-[#F28C38] mr-2"></i>All data is <span class="highlight">end-to-end encrypted</span></p>
                 </div>
                 <div class="feature-card p-6 rounded-lg shadow-md">
                     <p class="text-gray-300"><i class="fas fa-key text-[#F28C38] mr-2"></i>Encryption keys are generated client-side and never sent to our servers</p>
